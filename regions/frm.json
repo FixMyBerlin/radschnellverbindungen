@@ -1,0 +1,136 @@
+[{
+    "id": "frm1_frm",
+    "general": {
+        "ref": "FRM 1",
+        "name": "Radschnellweg Frankfurt - Darmstadt",
+        "from": "Frankfurt, Hessen",
+        "to": "Darmstadt, Hessen",
+        "description": "",
+        "slug": "frm1-radschnellweg-frankfurt-darmstadt"
+    },
+    "stakeholders": [
+        {
+            "name": "Nahmobil Hessen",
+            "roles": ["authority"],
+            "description": ""
+        }
+    ],
+    "status": "in_progress",
+    "planning_phase": "building",
+    "detail_level": "corridor", 
+    "finished": "2023",
+    "cost": "",
+    "references": {
+        "osm_relation": "8825592",
+        "website": "http://radschnellverbindung-ffm-da.de/"
+    }
+},
+{
+    "id": "frm2_frm",
+    "general": {
+        "ref": "FRM 2",
+        "name": "Radschnellweg Groß-Gerau - Frankfurt",
+        "from": "Groß-Gerau, Hessen",
+        "to": "Frankfurt, Hessen",
+        "description": "",
+        "slug": "frm2-radschnellweg-großgerau-frankfurt"
+    },
+    "stakeholders": [
+        {
+            "name": "Nahmobil Hessen",
+            "roles": ["authority"],
+            "description": ""
+        }
+    ],
+    "status": "agreed",
+    "planning_phase": "pilot",
+    "detail_level": "corridor", 
+    "finished": "",
+    "cost": "",
+    "references": {
+        "osm_relation": "",
+        "website": "https://www.region-frankfurt.de/Radschnellwege"
+    }
+},
+{
+    "id": "frm3_frm",
+    "general": {
+        "ref": "FRM 3",
+        "name": "Radschnellweg Wiesbaden - Frankfurt",
+        "from": "Wiesbaden, Hessen",
+        "to": "Frankfurt, Hessen",
+        "description": "",
+        "slug": "frm3-radschnellweg-wiesbaden-frankfurt"
+    },
+    "stakeholders": [
+        {
+            "name": "Nahmobil Hessen",
+            "roles": ["authority"],
+            "description": ""
+        }
+    ],
+    "status": "agreed",
+    "planning_phase": "agreed",
+    "detail_level": "corridor", 
+    "finished": "",
+    "cost": "",
+    "references": {
+        "osm_relation": "",
+        "website": "https://www.region-frankfurt.de/Radschnellwege"
+    }
+},
+{
+    "id": "frm4_frm",
+    "general": {
+        "ref": "FRM 4",
+        "name": "Radschnellweg Bad Soden - Eschborn",
+        "from": "Bad Soden, Hessen",
+        "to": "Eschborn, Hessen",
+        "description": "",
+        "slug": "frm4-radschnellweg-badsoden-eschborn"
+    },
+    "stakeholders": [
+        {
+            "name": "Nahmobil Hessen",
+            "roles": ["authority"],
+            "description": ""
+        }
+    ],
+    "status": "agreed",
+    "planning_phase": "pilot",
+    "detail_level": "corridor", 
+    "finished": "",
+    "cost": "",
+    "references": {
+        "osm_relation": "",
+        "website": "https://www.region-frankfurt.de/Radschnellwege"
+    }
+},
+{
+    "id": "frm5_frm",
+    "general": {
+        "ref": "FRM 5",
+        "name": "Radschnellweg Vordertaunus - Frankfurt",
+        "from": "Vordertaunus, Hessen",
+        "to": "Frankfurt, Hessen",
+        "description": "",
+        "slug": "frm5-radschnellweg-badsoden-eschborn"
+    },
+    "stakeholders": [
+        {
+            "name": "Nahmobil Hessen",
+            "roles": ["authority"],
+            "description": ""
+        }
+    ],
+    "status": "agreed",
+    "planning_phase": "pilot",
+    "detail_level": "corridor", 
+    "finished": "",
+    "cost": "",
+    "references": {
+        "osm_relation": "",
+        "website": "https://www.region-frankfurt.de/Radschnellwege"
+    }
+}
+]
