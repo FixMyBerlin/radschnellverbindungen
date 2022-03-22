@@ -14,21 +14,16 @@ The format is a [GeoJSON](https://geojson.org/) file. Just open it in your favor
 
 Contains map data from OpenStreetMap, which has the attribute `copyright="OpenStreetMap"`; © OpenStreetMap contributors. Therefore [LICENSE](LICENSE) does only apply on data which has no copyright attribute.
 
-## Data
+## Meta Data
 
-Every cycle highway is organized in it's own file. Every cycle highway CAN have multiple variants. 
-
-## Meta Information
-
-Every cycle highway has it's own meta information, independent from the individuals geometry segments. These apply to the cycle highway as a whole.
-
+Every cycle highway has it's own meta information, independent from the individuals geometry segments and variants. These information apply to the cycle highway as a whole. The `meta.json` file is an array of multiple cycle highways.
 
 ### Status
 A cycle highway MUST have one of the following states, segments CAN have one of the following state:
 
 1. `idea` - Politically discussed and not agreed, planning has not started
-2. `agreed` - It has been decided to plan the cycle highway, but planning has not been started
-3. `planning` - It is in one of the planning phases
+2. `agreed` - It has been decided to plan the cycle highway. The pilot study is finished, but planning has not been started
+3. `planning` - the highway is in one of the planning phases, except `piolt_study`
 4. `in_progress` - The segments have different planning phases, but as a whole it marches on
 5. `done` - The cycle highway part is built, finished and ready for usage 
 * `discarded` - While planning it does not meet the requirements or it is not desired anymore
@@ -88,9 +83,23 @@ The data model is the following [`JSON Schema`](), with allowed/example values.
 }
 ```
 
-### Detail Segments
+The **`detail_level`** describes in which accuracy the geometry is available in the GeoJSON. It MUST be one of the values: `exact`, `approximated`, `corridor`.
 
-Each segment describes a part of a variant. A segment has attributes describing the condition and information about the cycleway segment. Multiple segments are a variant.
+### Geometry Data
+Corresponding to the Meta JSON file, the *GeoJSON* file contains the geometry of the cycle highways. There are two types of cycle highway geometry types:
+
+* Variants (between `pilot` and `design` phases)
+* Segments (starting from `design` phase)
+
+**Variants** are possible relations between places (cities and villages), which exact pathway has not been defined and planned (yet). They occur mostly in the `preliminary` phase.
+
+**Segments** are parts of the planned pathway of a complete cycle highway. Sometimes there alternative ways beside the primary pathway. This version of the pathway mostly occurs in the `design` phase. Segments are about to be build, are being built or already done.
+
+The both geometry types reside both in the same GeoJSON file. If the planned cycle highway is available through the sections, the variants SHOULD NOT be removed. A frontend can than decide if which data should be displayed.
+
+### Segment
+
+A segment is a part of a planned cycle highway. It has attributes describing the condition and information about the cycleway segment. Multiple segments are the planned cycle highway. Every segment has a planning phase. Variants **do not** have planning phases. 
 
 ### Planning Phases
 
@@ -124,12 +133,22 @@ Usually in the early planning phases there are multiple possible variants of the
     // ..
     "variant": {
         "ref": "2",
-        "name": "Trassenvariante 2"
+        "name": "Trassenvariante 2",
+        "meta_id": "frm4_hessen",
+        "discarded": false
     }
 }
 ```
- The preferred route CAN have the `"ref": "default"`, but MUST be present.
+The **`ref`** keyword MUST be present. The preferred route CAN have the `"ref": "preferred"`.
+An alternative to the preferred route is usually an alternative route and SHOULD have the `"ref": "alternative"`, but MUST be present.
 
+Any other variant names CAN have an arbitrary value.
+
+The **`name`** describes the official name.
+
+The **`meta_id`** MUST correspond to the `general.id` in the MetaJSON. Therefore a direct relation between geometry and meta information is possible.
+
+The **`discarded`** property describes that a variant was a considered variant previously, but is discarded now.  
 
 ### Segment attributes
 
@@ -137,6 +156,7 @@ An example for **segment attributes**:
 ```jsonc
 "segment": {
     "id": "rs1_seg598",
+    "meta_id": "rs1_nrw",
     "status": "planning",
     "planning_phase": "design",
     "detail_level": "exact",
@@ -148,11 +168,13 @@ An example for **segment attributes**:
         }
     ],
     "variants": ["2a", "2b"], // List of the variants the segment is part of
-    "length": 12100 // optional, implicit, MUST be calculated from geometry, in m
+    "length": 12100 // implicit, MUST be calculated from geometry
 }
 ```
 
 The attribute `segment` would be the properties of the segment in a GeoJSON.
+
+The **`meta_id`** MUST correspond to the `general.id` in the MetaJSON. Therefore a direct relation between geometry and meta information is possible.
 
 ## See more
 
