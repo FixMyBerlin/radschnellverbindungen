@@ -23,7 +23,7 @@ Every cycle highway is organized in it's own file. Every cycle highway CAN have 
 Every cycle highway has it's own meta information, independent from the individuals geometry segments. These apply to the cycle highway as a whole.
 
 
-### Status
+### State
 A cycle highway MUST have one of the following states, segments CAN have one of the following state:
 
 1. `idea` - Politically discussed and not agreed, planning has not started
@@ -75,7 +75,7 @@ The data model is the following [`JSON Schema`](), with allowed/example values.
             "description": "RVR Ruhr ist zuständig für die Kommunikationsstrategie & -durchführung",
         },
     ],
-    "status": "planning",
+    "state": "planning",
     "planning_phase": "design",
     "detail_level": "exact", 
     "finished": "2024", // [optional] Year (and month) of finishing or expected finishing (format: "YYYY-MM" or "YYYY")
@@ -94,7 +94,7 @@ Each segment describes a part of a variant. A segment has attributes describing 
 
 ### Planning Phases
 
-Since this repository should represent build status of the cycle highways, these are the planning phases used exclusively in this order:
+Since this repository should represent build phases of the cycle highways, these are the planning phases used exclusively in this order:
 1. Pilot study [`pilot`]
 2. Preliminary planning [`preliminary`]
 3. Design planning [`design`]
@@ -137,7 +137,7 @@ An example for **segment attributes**:
 ```jsonc
 "segment": {
     "id": "rs1_seg598",
-    "status": "planning",
+    "state": "planning",
     "planning_phase": "design",
     "detail_level": "exact",
     "stakeholders": [
