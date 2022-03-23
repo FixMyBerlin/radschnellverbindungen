@@ -33,6 +33,13 @@ Then run:
 npx json2ts -i schema/meta.schema.json -o types/meta.d.ts
 ```
 
+For a human readable documentation, you can generate a HTML file using [json-schema-for-humans](https://pypi.org/project/json-schema-for-humans/).
+
+Install first: ```pip install json-schema-for-humans```
+Then run 
+```sh
+generate-schema-doc schema/meta.schema.json schema/
+```
 
 ### Status
 A cycle highway MUST have one of the following states, segments CAN have one of the following state:
