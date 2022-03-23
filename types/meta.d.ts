@@ -6,9 +6,9 @@
  */
 
 /**
- * This schema describes the state and basic information about one Radschnellverbindung
+ * This schema describes the state and basic information about one cycle highway (Radschnellverbindung)
  */
-export interface MetaJSONForCycleHighwayRadschnellverbindungen {
+export interface MetaSchemaRSV {
   /**
    * Distinct id for every cycle highway.
    */
@@ -44,7 +44,7 @@ export interface MetaJSONForCycleHighwayRadschnellverbindungen {
   finished?: string;
   cost?: string | number;
   references?: {
-    osm_relation?: string;
+    osm_relation?: number;
     website?: string;
     "copyright:geometry"?: string;
     [k: string]: unknown;

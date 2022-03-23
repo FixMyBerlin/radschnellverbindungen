@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "MetaJSON for cycle highway (Radschnellverbindungen)",
-  "description": "This schema describes the state and basic information about one Radschnellverbindung",
+  "title": "MetaSchemaRSV",
+  "description": "This schema describes the state and basic information about one cycle highway (Radschnellverbindung)",
   "type": "object",
   "properties": {
     "id": {
