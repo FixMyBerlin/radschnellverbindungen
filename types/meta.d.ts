@@ -12,8 +12,8 @@ export interface MetaJSONForCycleHighwayRadschnellverbindungen {
   /**
    * Distinct id for every cycle highway.
    */
-  id?: string;
-  general?: {
+  id: string;
+  general: {
     ref?: string;
     name?: string;
     from: string;
@@ -35,7 +35,7 @@ export interface MetaJSONForCycleHighwayRadschnellverbindungen {
           [k: string]: unknown;
         }
       ];
-  status?: "idea" | "agreed" | "planning" | "in_progress" | "done" | "discarded";
+  status: "idea" | "agreed" | "planning" | "in_progress" | "done" | "discarded";
   planning_phase?: "pilot" | "preliminiary" | "design" | "approval" | "execution" | "building";
   detail_level?: "exact" | "approximated" | "corridor";
   /**
@@ -49,6 +49,5 @@ export interface MetaJSONForCycleHighwayRadschnellverbindungen {
     "copyright:geometry"?: string;
     [k: string]: unknown;
   };
-  required?: ["id", "general", "status"];
   [k: string]: unknown;
 }

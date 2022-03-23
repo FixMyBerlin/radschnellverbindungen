@@ -71,7 +71,7 @@
         "website": { "type": "string" },
         "copyright:geometry": { "type": "string" }
       }
-    },
-    "required": ["id", "general", "status"]
-  }
+    }
+  },
+  "required": ["id", "general", "status"]
 }
