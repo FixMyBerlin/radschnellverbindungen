@@ -22,6 +22,24 @@ Every cycle highway is organized in it's own file. Every cycle highway CAN have 
 
 Every cycle highway has it's own meta information, independent from the individuals geometry segments. These apply to the cycle highway as a whole.
 
+> You can use the [JSON Schema for MetaJSON](schema/meta.schema.json) for validation and generation of TypeScript types.
+
+### Types generation
+
+You can use the [json-schema-to-typescript](https://www.npmjs.com/package/json-schema-to-typescript) to generate TypeScript types out of the JSON Schema. For that, install the package : `npm install -g json-schema-to-typescript`
+
+Then run:
+```sh
+npx json2ts -i schema/meta.schema.json -o types/meta.d.ts
+```
+
+For a human readable documentation, you can generate a HTML file using [json-schema-for-humans](https://pypi.org/project/json-schema-for-humans/).
+
+Install first: ```pip install json-schema-for-humans```
+Then run 
+```sh
+generate-schema-doc schema/meta.schema.json schema/
+```
 
 ### State
 A cycle highway MUST have one of the following states, segments CAN have one of the following state:

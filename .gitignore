@@ -1,2 +1,5 @@
 *.csv
 rsv_data.json
+*.schema.html
+schema_doc.css
+schema_doc.min.js
