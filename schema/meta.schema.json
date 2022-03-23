@@ -1,30 +1,14 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/product.schema.json",
-  "title": "MetaJSON for ",
-  "description": "Overview over Radschnellverbindung",
+  "title": "MetaJSON for cycle highway (Radschnellverbindungen)",
+  "description": "This schema describes the state and basic information about one Radschnellverbindung",
   "type": "object",
   "properties": {
     "id": {
-      "description": "Distinct id for every cycle highway",
+      "description": "Distinct id for every cycle highway.",
       "type": "string"
     },
-    "general":  { "$ref": "/schemas/general" },
-    "stakeholders": {"type": "array"},
-    "status": {"type": "string"},
-    "planning_phase": {"type": "string"},
-    "detail_level": {"type": "string"},
-    "finished": {"type": "string"},
-    "cost": { "type": ["string", "number"]},
-    "references": { "$ref": "/schemas/references" }
-  },
-  "required": ["id", "general", "status"],
-
-  "$defs": {
     "general": {
-      "$id": "/schemas/general",
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-
       "type": "object",
       "properties": {
         "ref": { "type": "string" },
@@ -36,16 +20,58 @@
       },
       "required": ["from", "to", "slug"]
     },
+    "stakeholders": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "roles": {
+              "type": "array",
+              "items": [
+                {
+                  "enum": ["communication", "authority"]
+                }
+              ]
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": ["name", "roles"]
+        }
+      ]
+    },
+    "status": {
+      "enum": ["idea", "agreed", "planning", "in_progress", "done", "discarded"]
+    },
+    "planning_phase": {
+      "enum": [
+        "pilot",
+        "preliminiary",
+        "design",
+        "approval",
+        "execution",
+        "building"
+      ]
+    },
+    "detail_level": { "enum": ["exact", "approximated", "corridor"] },
+    "finished": {
+      "type": "string",
+      "description": "Year or date when building of all segments have been done."
+    },
+    "cost": { "type": ["string", "number"] },
     "references": {
-      "$id": "/schemas/references",
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-
       "type": "object",
       "properties": {
         "osm_relation": { "type": "string" },
         "website": { "type": "string" },
         "copyright:geometry": { "type": "string" }
       }
-    }
+    },
+    "required": ["id", "general", "status"]
   }
 }
