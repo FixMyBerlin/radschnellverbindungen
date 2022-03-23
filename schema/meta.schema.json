@@ -61,6 +61,7 @@
     "detail_level": { "enum": ["exact", "approximated", "corridor"] },
     "finished": {
       "type": "string",
+      "pattern": "^([0-9]{4})|[0-9]{4}-[0-9]{2}",
       "description": "Year or date when building of all segments have been done."
     },
     "cost": { "type": ["string", "number"] },
