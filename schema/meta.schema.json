@@ -16,7 +16,7 @@
         "from": { "type": "string" },
         "to": { "type": "string" },
         "description": { "type": "string" },
-        "slug": { "type": "string", "description": "Defines an URL slug" }
+        "slug": { "type": "string", "description": "Defines an URL slug", "format": "uri-reference" }
       },
       "required": ["from", "to", "slug"]
     },
@@ -61,15 +61,15 @@
     "detail_level": { "enum": ["exact", "approximated", "corridor"] },
     "finished": {
       "type": "string",
-      "pattern": "^([0-9]{4})|[0-9]{4}-[0-9]{2}",
+      "format": "date",
       "description": "Year or date when building of all segments have been done."
     },
     "cost": { "type": ["string", "number"] },
     "references": {
       "type": "object",
       "properties": {
-        "osm_relation": { "type": "string" },
-        "website": { "type": "string" },
+        "osm_relation": { "type": "number" },
+        "website": { "type": "string", "format": "uri" },
         "copyright:geometry": { "type": "string" }
       }
     }
