@@ -18,7 +18,26 @@ Contains map data from OpenStreetMap, which has the attribute `copyright="OpenSt
 
 Every cycle highway has it's own meta information, independent from the individuals geometry segments and variants. These information apply to the cycle highway as a whole. The `meta.json` file is an array of multiple cycle highways.
 
-### Status
+> You can use the [JSON Schema for MetaJSON](schema/meta.schema.json) for validation and generation of TypeScript types.
+
+### Types generation
+
+You can use the [json-schema-to-typescript](https://www.npmjs.com/package/json-schema-to-typescript) to generate TypeScript types out of the JSON Schema. For that, install the package : `npm install -g json-schema-to-typescript`
+
+Then run:
+```sh
+npx json2ts -i schema/meta.schema.json -o types/meta.d.ts
+```
+
+For a human readable documentation, you can generate a HTML file using [json-schema-for-humans](https://pypi.org/project/json-schema-for-humans/).
+
+Install first: ```pip install json-schema-for-humans```
+Then run 
+```sh
+generate-schema-doc schema/meta.schema.json schema/
+```
+
+### State
 A cycle highway MUST have one of the following states, segments CAN have one of the following state:
 
 1. `idea` - Politically discussed and not agreed, planning has not started
@@ -70,7 +89,7 @@ The data model is the following [`JSON Schema`](), with allowed/example values.
             "description": "RVR Ruhr ist zuständig für die Kommunikationsstrategie & -durchführung",
         },
     ],
-    "status": "planning",
+    "state": "planning",
     "planning_phase": "design",
     "detail_level": "exact", 
     "finished": "2024", // [optional] Year (and month) of finishing or expected finishing (format: "YYYY-MM" or "YYYY")
@@ -128,7 +147,7 @@ The **filename** MUST correspond to the `general.id` in the MetaJSON. Therefore 
 
 ### Planning Phases
 
-Since this repository should represent build status of the cycle highways, these are the planning phases used exclusively in this order:
+Since this repository should represent build phases of the cycle highways, these are the planning phases used exclusively in this order:
 1. Pilot study [`pilot`]
 2. Preliminary planning [`preliminary`]
 3. Design planning [`design`]
