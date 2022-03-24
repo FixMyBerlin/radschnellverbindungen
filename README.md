@@ -109,6 +109,7 @@ An example for **segment attributes**:
     "id": "rs1_seg598",
     "status": "planning",
     "planning_phase": "design",
+    "description:planning_phase": "",
     "detail_level": "exact",
     "stakeholders": [
         {
@@ -142,6 +143,7 @@ Planning phases are assigned through attribute `planning_phase`. The attribute i
     // ..
     "state": "planning",
     "planning_phase": "approval",
+    "description:planning_phase": ""
 }
 ```
 
