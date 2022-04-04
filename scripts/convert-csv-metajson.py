@@ -7,7 +7,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Convert a CSV containing cycle highways into a Meta JSON file.Specification for the Meta JSON can be found at https://github.com/FixMyBerlin/radschnellwege')
 
-parser.add_argument("-r", "--region", help="Output only highways containing the string which is contained in the ref or Bundesland.", default="All regions")
+parser.add_argument("-r", "--region", help="Output only highways containing the string which is contained in the ref or Bundesland (case-insensitive)", default="All regions")
 
 args = parser.parse_args()
 
@@ -20,7 +20,7 @@ column_removals = [
 
 def csv_to_json(csvFilePath, jsonFilePath):
     jsonArray = []
-    selected_region = args.region
+    selected_region = args.region.lower()
       
     #read csv file
     with open(csvFilePath, encoding='utf-8') as csvf: 
@@ -41,7 +41,8 @@ def csv_to_json(csvFilePath, jsonFilePath):
         #convert each csv row into python dict
         for row in list(csvReader):
             rowCopy = {}
-            if selected_region == "All regions" or (selected_region in row["Abk\u00fcrzung"]) or (selected_region in row["Bundesland"]):
+            print(selected_region)
+            if selected_region == "All regions" or (selected_region in row["Abkürzung"].lower()) or (selected_region == row["Bundesland"].lower()):
                 ref = row["Abk\u00fcrzung"].lower().replace(" ", "")
                 if row["Abk\u00fcrzung"] and row["Bundesland"]:
                     rowCopy["id"] = row["Bundesland"].lower() + "_" + ref
@@ -73,7 +74,7 @@ def csv_to_json(csvFilePath, jsonFilePath):
                     "osm_relation": ""
                 }
                 
-            jsonArray.append(rowCopy)
+                jsonArray.append(rowCopy)
   
     #convert python jsonArray to JSON String and write to file
     with open(jsonFilePath, 'w', encoding='utf-8') as jsonf: 
