@@ -82,7 +82,7 @@ def csv_to_json(csvFilePath, jsonFilePath):
         jsonf.write(jsonString)
           
 csvFilePath = r'../data/list_rsv.csv'
-jsonFilePath = r'../data/rsv_data.json'
+jsonFilePath = r'../data/rsv_meta.json'
 
 start = time.perf_counter()
 csv_to_json(csvFilePath, jsonFilePath)
