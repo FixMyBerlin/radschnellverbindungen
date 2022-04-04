@@ -5,18 +5,12 @@ import json
 import time
 import argparse
 
-parser = argparse.ArgumentParser(description='Convert a CSV containing cycle highways into a Meta JSON file.Specification for the Meta JSON can be found at https://github.com/FixMyBerlin/radschnellwege')
+parser = argparse.ArgumentParser(description='Convert a CSV containing cycle highways into a Meta JSON file. Specification for the Meta JSON can be found at https://github.com/FixMyBerlin/radschnellverbindungen')
 
 parser.add_argument("-r", "--region", help="Output only highways containing the string which is contained in the ref or Bundesland (case-insensitive)", default="All regions")
+parser.add_argument("-o", "--output", help="Define filename of meta json output", default="rsv_meta.json")
 
 args = parser.parse_args()
-
-column_removals = [
-    "", "ID_qgis", "Partnerkommune", "Projektwebsite", "Beteiligungsverfahren",
-    "Wiki-Update", "Quellen", "Bundesland", "Kontakt", "Linestring",
-    "Trassenf\u00fchrung", "Foto", "L\u00e4nge", "Auftraggeber", "von",
-    "bis", "Abk\u00fcrzung", "Titel", "(Kurzbeschreibung)"
-]
 
 def csv_to_json(csvFilePath, jsonFilePath):
     jsonArray = []
@@ -39,10 +33,9 @@ def csv_to_json(csvFilePath, jsonFilePath):
 
         csvf.seek(0)
         #convert each csv row into python dict
-        for row in list(csvReader):
+        for row in list(csvReader)[1:]:
             rowCopy = {}
-            print(selected_region)
-            if selected_region == "All regions" or (selected_region in row["Abkürzung"].lower()) or (selected_region == row["Bundesland"].lower()):
+            if selected_region == "all regions" or (selected_region in row["Abk\u00fcrzung"].lower()) or (selected_region == row["Bundesland"].lower()):
                 ref = row["Abk\u00fcrzung"].lower().replace(" ", "")
                 if row["Abk\u00fcrzung"] and row["Bundesland"]:
                     rowCopy["id"] = row["Bundesland"].lower() + "_" + ref
@@ -81,8 +74,10 @@ def csv_to_json(csvFilePath, jsonFilePath):
         jsonString = json.dumps(jsonArray, indent=4)
         jsonf.write(jsonString)
           
+output_filename = args.output
+
 csvFilePath = r'../data/list_rsv.csv'
-jsonFilePath = r'../data/rsv_meta.json'
+jsonFilePath = r'../data/' + output_filename
 
 start = time.perf_counter()
 csv_to_json(csvFilePath, jsonFilePath)

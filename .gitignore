@@ -1,5 +1,5 @@
 *.csv
-rsv_meta.json
+data/*.json
 *.schema.html
 schema_doc.css
 schema_doc.min.js
