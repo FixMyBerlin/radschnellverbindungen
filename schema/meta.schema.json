@@ -33,7 +33,7 @@
               "type": "array",
               "items": [
                 {
-                  "enum": ["communication", "authority"]
+                  "enum": ["communication", "authority", "construction_company"]
                 }
               ]
             },

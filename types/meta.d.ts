@@ -30,7 +30,7 @@ export interface MetaSchemaRSV {
     | [
         {
           name: string;
-          roles: [] | ["communication" | "authority"];
+          roles: [] | ["communication" | "authority" | "construction_company"];
           description?: string;
           [k: string]: unknown;
         }

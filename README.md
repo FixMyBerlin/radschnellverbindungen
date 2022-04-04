@@ -62,6 +62,8 @@ Every organization / institution CAN be part of the `stakeholders` attribute. Ev
 ]
 ```
 
+Available roles are: `"communication"`, `"authority"` and `"construction_company"`
+
 ### Example Meta JSON
 
 The data model is the following [`JSON Schema`](), with allowed/example values.
