@@ -7,7 +7,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Convert a CSV containing cycle highways into a Meta JSON file.Specification for the Meta JSON can be found at https://github.com/FixMyBerlin/radschnellwege')
 
-parser.add_argument("-r", "--region", help="Output only highways containing the string which is contained in the ref.", default="All regions")
+parser.add_argument("-r", "--region", help="Output only highways containing the string which is contained in the ref or Bundesland.", default="All regions")
 
 args = parser.parse_args()
 
@@ -27,42 +27,53 @@ def csv_to_json(csvFilePath, jsonFilePath):
         #load csv file data using csv library's dictionary reader
         csvReader = csv.DictReader(csvf) 
 
+        # Count RSV per state
+        states = {}
+        for row in list(csvReader):
+            if row["Bundesland"] not in states:
+                states[row["Bundesland"]] = 1
+                # For counting when building rsv id
+                states[row["Bundesland"]+"_count"] = 1
+            else:
+                states[row["Bundesland"]] += 1
+
+        csvf.seek(0)
         #convert each csv row into python dict
         for row in list(csvReader):
             rowCopy = {}
-            if selected_region == "All regions" or (selected_region in row["Abk\u00fcrzung"]):
-                for key in list(row):
-                    ref = row["Abk\u00fcrzung"].lower().replace(" ", "")
-                    if row["Abk\u00fcrzung"] and row["Bundesland"]:
-                        rowCopy["id"] = ref + "_" + row["Bundesland"].lower()
-                    elif not row["Abk\u00fcrzung"] and row["Bundesland"]:
-                        rowCopy["id"] = row["Bundesland"].lower() + "_" + row["ID"]
-                    else:
-                        rowCopy["id"] = row["ID"]
-                    rowCopy["cost"] = row["Kosten"]
-                    rowCopy["finished"] = row["Fertigstellung"]
-                    rowCopy["state"] = row["Projektstand"]
-                    rowCopy["planning_phase"] = ""
-                    rowCopy["detail_level"] = ""
-                    rowCopy["general"] = {
-                        "ref": row["Abkürzung"],
-                        "name": row["Titel"],
-                        "from": row["von"],
-                        "to": row["bis"],
-                        "description": row["(Kurzbeschreibung)"],
-                        "slug": ""
-                    }
-                    rowCopy["stakeholders"] = [{
-                        "name": row["Auftraggeber"],
-                        "roles": ["authority"],
-                        "description": ""
-                    }]
-                    rowCopy["references"] = {
-                        "website": "",
-                        "osm_relation": ""
-                    }
+            if selected_region == "All regions" or (selected_region in row["Abk\u00fcrzung"]) or (selected_region in row["Bundesland"]):
+                ref = row["Abk\u00fcrzung"].lower().replace(" ", "")
+                if row["Abk\u00fcrzung"] and row["Bundesland"]:
+                    rowCopy["id"] = row["Bundesland"].lower() + "_" + ref
+                elif not row["Abk\u00fcrzung"] and row["Bundesland"]:
+                    rowCopy["id"] = row["Bundesland"].lower() + "_" + str(states[row["Bundesland"]+"_count"]) 
+                    states[row["Bundesland"]+"_count"] += 1
+                else:
+                    rowCopy["id"] = row["ID"]
+                rowCopy["cost"] = row["Kosten"]
+                rowCopy["finished"] = row["Fertigstellung"]
+                rowCopy["state"] = row["Projektstand"]
+                rowCopy["planning_phase"] = ""
+                rowCopy["detail_level"] = ""
+                rowCopy["general"] = {
+                    "ref": row["Abkürzung"],
+                    "name": row["Titel"],
+                    "from": row["von"],
+                    "to": row["bis"],
+                    "description": row["(Kurzbeschreibung)"],
+                    "slug": ""
+                }
+                rowCopy["stakeholders"] = [{
+                    "name": row["Auftraggeber"],
+                    "roles": ["authority"],
+                    "description": ""
+                }]
+                rowCopy["references"] = {
+                    "website": "",
+                    "osm_relation": ""
+                }
                 
-                jsonArray.append(rowCopy)
+            jsonArray.append(rowCopy)
   
     #convert python jsonArray to JSON String and write to file
     with open(jsonFilePath, 'w', encoding='utf-8') as jsonf: 
