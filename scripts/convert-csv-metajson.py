@@ -9,62 +9,48 @@ parser = argparse.ArgumentParser(description='Convert a CSV containing cycle hig
 
 parser.add_argument("-r", "--region", help="Output only highways containing the string which is contained in the ref or Bundesland (case-insensitive)", default="All regions")
 parser.add_argument("-o", "--output", help="Define filename of meta json output", default="rsv_meta.json")
-
+parser.add_argument("-i", "--input", help="Define path of csv input", default="rsv.csv")
 args = parser.parse_args()
 
 def csv_to_json(csvFilePath, jsonFilePath):
     jsonArray = []
-    selected_region = args.region.lower()
-      
+    selected_regions = args.region.lower()
+    selected_regions = selected_regions.split(" ")
+
     #read csv file
     with open(csvFilePath, encoding='utf-8') as csvf: 
         #load csv file data using csv library's dictionary reader
         csvReader = csv.DictReader(csvf) 
 
-        # Count RSV per state
-        states = {}
-        for row in list(csvReader):
-            if row["Bundesland"] not in states:
-                states[row["Bundesland"]] = 1
-                # For counting when building rsv id
-                states[row["Bundesland"]+"_count"] = 1
-            else:
-                states[row["Bundesland"]] += 1
-
-        csvf.seek(0)
         #convert each csv row into python dict
         for row in list(csvReader)[1:]:
             rowCopy = {}
-            if selected_region == "all regions" or (selected_region in row["Abk\u00fcrzung"].lower()) or (selected_region == row["Bundesland"].lower()):
+            if row["GeoJSON"] == "ja" and (selected_regions == "all regions" or (row["Bundesland"].lower() in selected_regions)):
                 ref = row["Abk\u00fcrzung"].lower().replace(" ", "")
-                if row["Abk\u00fcrzung"] and row["Bundesland"]:
-                    rowCopy["id"] = row["Bundesland"].lower() + "_" + ref
-                elif not row["Abk\u00fcrzung"] and row["Bundesland"]:
-                    rowCopy["id"] = row["Bundesland"].lower() + "_" + str(states[row["Bundesland"]+"_count"]) 
-                    states[row["Bundesland"]+"_count"] += 1
-                else:
-                    rowCopy["id"] = row["ID"]
+                rowCopy["id"] = ref + "-" + row["Bundesland"].lower()
                 rowCopy["cost"] = row["Kosten"]
                 rowCopy["finished"] = row["Fertigstellung"]
                 rowCopy["state"] = row["Projektstand"]
-                rowCopy["planning_phase"] = ""
-                rowCopy["detail_level"] = ""
+                # rowCopy["planning_phase"] = ""
+                # rowCopy["detail_level"] = ""
                 rowCopy["general"] = {
                     "ref": row["Abkürzung"],
                     "name": row["Titel"],
                     "from": row["von"],
                     "to": row["bis"],
+                    "length": row["Länge"],
                     "description": row["(Kurzbeschreibung)"],
-                    "slug": ""
+                    "source": row["Quellen"],
+                    # "slug": ""
                 }
                 rowCopy["stakeholders"] = [{
                     "name": row["Auftraggeber"],
                     "roles": ["authority"],
-                    "description": ""
+                    # "description": ""
                 }]
                 rowCopy["references"] = {
-                    "website": "",
-                    "osm_relation": ""
+                    "website": row["Projektwebsite"],
+                    # "osm_relation": ""
                 }
                 
                 jsonArray.append(rowCopy)
@@ -76,8 +62,8 @@ def csv_to_json(csvFilePath, jsonFilePath):
           
 output_filename = args.output
 
-csvFilePath = r'../data/list_rsv.csv'
-jsonFilePath = r'../data/' + output_filename
+csvFilePath = args.input
+jsonFilePath =  args.output
 
 start = time.perf_counter()
 csv_to_json(csvFilePath, jsonFilePath)
