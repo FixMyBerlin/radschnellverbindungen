@@ -4,9 +4,8 @@
     <h1>Radschnellwege Deutschland</h1>
 </div>
 
-> This project is in progress. Accuracy of ways are getting improved as time flows and the Radschnellwege have finished planning.
-
-> There are still Radschnellwege and attributes of them missing. Open a pull-request, an issue or contact me when you want to improve something.
+> **Attention**
+> This repository is an archive and has been integrated into another project: https://github.com/FixMyBerlin/fixmy.rsv
 
 A list, map, database (call it how you like) of planned, currently build and finished cycle highways (Radschnellwege) in Germany. All handmade and updated manually.
 
